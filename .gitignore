@@ -221,3 +221,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+# Données (trop volumineuses + conditions d'utilisation DVF)
+*.csv
+*.csv.gz
+data/
