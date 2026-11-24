@@ -28,3 +28,24 @@ SELECT departement,
        NTILE(4) OVER (ORDER BY prix_m2_moyen DESC) AS groupe
 FROM prix_dep
 ORDER BY rang;
+-- CTE recursive : chemin complet d'une commune
+-- resultat : France > Département 95 > Osny
+WITH RECURSIVE arbre AS (
+    SELECT id_zone, nom, id_parent, 0 AS profondeur, nom::TEXT AS chemin
+    FROM dim_zone
+    WHERE id_parent IS NULL                        -- ancre
+    UNION ALL
+    SELECT z.id_zone, z.nom, z.id_parent, a.profondeur + 1,
+           a.chemin || ' > ' || z.nom
+    FROM dim_zone z
+    JOIN arbre a ON z.id_parent = a.id_zone        -- partie recursive
+    WHERE a.profondeur < 10                        -- arret
+)
+SELECT * FROM arbre WHERE nom = 'Osny';
+
+-- test index sur 11 M de lignes
+-- avant : Seq Scan 1586.7 ms / apres : Index Scan 0.088 ms
+EXPLAIN ANALYZE
+SELECT * FROM staging_dvf WHERE id_mutation = '2024-500000';
+
+CREATE INDEX idx_staging_mutation ON staging_dvf (id_mutation);
