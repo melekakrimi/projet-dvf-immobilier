@@ -23,23 +23,33 @@ JOIN dim_type_bien t     ON f.id_type     = t.id_type
 JOIN dim_nature_vente n  ON f.id_nature   = n.id_nature
 WHERE f.prix / f.surface BETWEEN 500 AND 30000
   AND f.surface BETWEEN 9 AND 1000;
--- test nombre des ventes dans la vue 
+
+-- test nombre des ventes dans la vue
+
 SELECT COUNT(*) FROM v_ventes;
--- verification des valeurs vides 
+
+-- verification des valeurs vides
+
 SELECT COUNT(*) - COUNT(date_complete) AS date_vide,
        COUNT(*) - COUNT(commune)       AS commune_vide,
        COUNT(*) - COUNT(type_bien)     AS type_vide,
        COUNT(*) - COUNT(prix)          AS prix_vide,
        COUNT(*) - COUNT(nb_pieces)     AS pieces_vide
 FROM v_ventes;
--- verification que les prix sont a la bonne limite 
+
+-- verification que les prix sont a la bonne limite
+
 SELECT MIN(prix_m2), MAX(prix_m2),
        MIN(surface), MAX(surface),
        MIN(date_complete), MAX(date_complete)
 FROM v_ventes;
+
 -- verification des doublons 
+
 SELECT COUNT(*) - COUNT(DISTINCT id_vente) AS doublons FROM v_ventes;
+
 -- prix m² par depart
+
 SELECT departement, ROUND(AVG(prix_m2), 0) AS prix_m2_moyen
 FROM v_ventes
 GROUP BY departement
