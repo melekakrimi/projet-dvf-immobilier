@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: dvf
+    schema: public
+    description: "Ventes immobilières DVF brutes 2023-2025 (data.gouv.fr, Licence Ouverte 2.0)"
+    tables:
+      - name: staging_dvf
+        description: "CSV importé tel quel : une ligne par bien d'une mutation, tout en TEXT"
+        columns:
+          - name: id_mutation
+            description: "Identifiant de la vente (plusieurs lignes possibles par vente)"
+            tests:
+              - not_null
+              
