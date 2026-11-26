@@ -225,3 +225,7 @@ __marimo__/
 *.csv
 *.csv.gz
 data/
+
+# --- projet DVF / dbt ---
+logs/
+dbt_packages/
