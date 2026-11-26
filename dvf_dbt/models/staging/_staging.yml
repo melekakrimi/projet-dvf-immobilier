@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: stg_dvf__mutations
+    description: "Données DVF typées et nettoyées, une ligne par bien d'une mutation"
+    columns:
+      - name: id_mutation
+        tests:
+          - not_null

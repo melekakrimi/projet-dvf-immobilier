@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: int_ventes_simples
+    description: "Ventes d'un seul logement, sans valeurs aberrantes, avec prix au m2"
+    columns:
+      - name: id_mutation
+        tests:
+          - unique
+          - not_null
+      - name: type_local
+        tests:
+          - accepted_values:
+              values: ['Maison', 'Appartement']
